@@ -1,13 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const express = require('express');
 const bodyParser = require('body-parser');
+const sample = require('./sample');
 
 const server = express();
 server.use(bodyParser.json());
-
 const users = [];
 
 server.post('/signup', (req, res) => {
+  sample.sample();
   const {
     firstname, lastname, username, password,
   } = req.body;
@@ -20,7 +21,7 @@ server.post('/signup', (req, res) => {
   console.log(users);
 });
 
-server.get('/login', (req, res) => {
+server.post('/login', (req, res) => {
   const {
     username, password,
   } = req.body;
