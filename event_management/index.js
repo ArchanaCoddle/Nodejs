@@ -7,7 +7,7 @@ server.use(bodyParser.json());
 
 const users = [];
 
-server.post('/', (req, res) => {
+server.post('/signup', (req, res) => {
   const {
     firstname, lastname, username, password,
   } = req.body;
@@ -17,6 +17,19 @@ server.post('/', (req, res) => {
   console.log(newUser);
   users.push(newUser);
   res.send('Signup successful');
+  console.log(users);
+});
+
+server.get('/login', (req, res) => {
+  const {
+    username, password,
+  } = req.body;
+  const user = users.find((u) => u.username === username && u.password === password);
+  if (user) {
+    res.send('login succefull');
+  } else {
+    res.send('invalid username/password');
+  }
   console.log(users);
 });
 
