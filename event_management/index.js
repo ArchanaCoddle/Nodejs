@@ -87,6 +87,19 @@ server.get('/events', verifying, (req, res) => {
   });
 });
 
+server.post('/events/particular', verifying, (req, res) => {
+  const eventSelected = req.body;
+  console.log(eventSelected);
+  con.query(`SELECT * FROM package_categories where name='${eventSelected.eventSelected}'`, (loginErr, loginResults) => {
+    if (loginErr) {
+      console.log('Database error:', loginErr);
+    } else {
+      console.log(loginResults);
+      res.send(loginResults);
+    }
+  });
+});
+
 server.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
 });
