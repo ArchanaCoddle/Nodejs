@@ -9,7 +9,7 @@ const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'Ammu123@',
-  database: 'event_management',
+  database: 'archana',
 });
 con.connect((err) => {
   if (err) {
