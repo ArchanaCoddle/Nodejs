@@ -8,12 +8,9 @@ const con = mysql.createConnection({
 });
 
 function signup(user, callback) {
-  const {
-    id, firstname, lastname, phone, email, address, username, password,
-  } = user;
-
   const sql = 'INSERT INTO customer (id, first_name, last_name, phone, email, address, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-  const values = [id, firstname, lastname, phone, email, address, username, password];
+  const values = [user.id, user.firstname, user.lastname,
+    user.phone, user.email, user.address, user.username, user.password];
 
   con.query(sql, values, (err, result) => {
     if (err) {

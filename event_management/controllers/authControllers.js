@@ -33,7 +33,6 @@ function signup(req, res) {
       res.send('Signup successful');
     }
   });
-  console.log(newUser);
 }
 
 module.exports = { login, signup };
