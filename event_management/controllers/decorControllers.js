@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const eventModel = require('../models/event');
+const eventModel = require('../models/decor');
 
 const secretKey = 'Archana';
 function verifying(req, res, next) {
@@ -18,8 +18,8 @@ function verifying(req, res, next) {
   });
 }
 
-function allEvent(req, res) {
-  eventModel.allEvent(req, (loginErr, user) => {
+function allDecor(req, res) {
+  eventModel.allDecor(req, (loginErr, user) => {
     if (loginErr) {
       console.log('Database error:', loginErr);
     } else {
@@ -28,17 +28,7 @@ function allEvent(req, res) {
     }
   });
 }
-function eventSelected(req, res) {
-  const eventClicked = req.body.eventSelected;
-  eventModel.eventSelected(eventClicked, (err, data) => {
-    if (err) {
-      console.log('Database error:', err);
-    } else {
-      res.send({ data });
-    }
-  });
-}
 
 module.exports = {
-  allEvent, eventSelected, verifying,
+  allDecor, verifying,
 };

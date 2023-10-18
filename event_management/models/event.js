@@ -9,7 +9,7 @@ const cont = mysql.createConnection({
 });
 
 function allEvent(some, callback) {
-  const sql = 'SELECT * FROM package_categories';
+  const sql = 'SELECT id, name, description, type, price FROM package_categories';
   cont.query(sql, (error, results) => {
     if (error) {
       console.error('Error inserting data:', error);
