@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const verifying = require('../middleware/tokenVerfication');
 const UserModel = require('../models/user');
 
 const secretKey = 'Archana';
@@ -36,4 +37,4 @@ async function signup(req, res) {
   }
 }
 
-module.exports = { login, signup };
+module.exports = { login, signup, verifying };
