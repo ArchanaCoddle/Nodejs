@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 const cont = mysql.createConnection({
   host: 'localhost',
@@ -8,28 +8,27 @@ const cont = mysql.createConnection({
   database: 'archana',
 });
 
-function allEvent(some, callback) {
-  const sql = 'SELECT id, name, description, type, price FROM package_categories';
-  cont.query(sql, (error, results) => {
-    if (error) {
-      console.error('Error inserting data:', error);
-      callback(error, null);
-    } else {
-      console.log('Data getted successfully.', results);
-      callback(null, results);
-    }
-  });
+async function allEvent() {
+  try {
+    const sql = 'SELECT id, name, description, type, price FROM package_categories';
+    const result = await (await cont).query(sql);
+    console.log('Data retrieved successfully.', result[0]);
+    return result[0];
+  } catch (error) {
+    console.log('Error retrieving data:', error);
+    throw error;
+  }
 }
-function eventSelected(eventSelected, callback) {
-  const sql = 'SELECT * FROM package_categories where name=?';
-  const values = eventSelected;
-  cont.query(sql, values, (err, results) => {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, results);
-    }
-  });
+async function eventSelected(eventsSelected) {
+  try {
+    const sql = 'SELECT * FROM package_categories where name=?';
+    const value = await (await cont).query(sql, [eventsSelected]);
+    console.log('Data retrieved successfully.', value[0]);
+    return value[0];
+  } catch (error) {
+    console.log('Error retrieving data:', error);
+    throw error;
+  }
 }
 
 module.exports = {

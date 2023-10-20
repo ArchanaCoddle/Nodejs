@@ -1,4 +1,5 @@
-const mysql = require('mysql2');
+/* eslint-disable no-useless-catch */
+const mysql = require('mysql2/promise');
 
 const cont = mysql.createConnection({
   host: 'localhost',
@@ -6,18 +7,26 @@ const cont = mysql.createConnection({
   password: 'Ammu123@',
   database: 'archana',
 });
+if (cont) {
+  console.log('db con complete');
+} else {
+  console.log('db not complete');
+}
 
-function allDecor(some, callback) {
+async function allDecor() {
   const sql = 'SELECT id, name, description, quantity, price FROM decor_item';
-  cont.query(sql, (error, results) => {
-    if (error) {
-      console.error('Error inserting data:', error);
-      callback(error, null);
-    } else {
-      console.log('Data getted successfully.', results);
-      callback(null, results);
-    }
-  });
+  console.log('3');
+  try {
+    console.log('4');
+    const result = await (await cont).query(sql);
+    console.log('5');
+    console.log('Data retrieved successfully.', result[0]);
+    console.log('6');
+    return result[0];
+  } catch (error) {
+    console.log('Error retrieving data:', error);
+    throw error;
+  }
 }
 
 module.exports = {

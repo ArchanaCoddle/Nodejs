@@ -8,7 +8,6 @@ function verifying(req, res, next) {
     res.send('no token provided');
   }
   const token = authHeader.split(' ')[1];
-  // eslint-disable-next-line no-unused-vars
   jwt.verify(token, secretKey, (err) => {
     if (err) {
       res.send('authentication failed', err.message);
@@ -18,15 +17,16 @@ function verifying(req, res, next) {
   });
 }
 
-function allDecor(req, res) {
-  eventModel.allDecor(req, (loginErr, user) => {
-    if (loginErr) {
-      console.log('Database error:', loginErr);
-    } else {
-      console.log('controller', user);
-      res.send({ user });
-    }
-  });
+async function allDecor(req, res) {
+  try {
+    console.log('1');
+    const data = await eventModel.allDecor();
+    console.log('2');
+    res.send({ data });
+  } catch (error) {
+    console.log('Database error:', error);
+    res.send(error);
+  }
 }
 
 module.exports = {

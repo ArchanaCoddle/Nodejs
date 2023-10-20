@@ -18,25 +18,26 @@ function verifying(req, res, next) {
   });
 }
 
-function allEvent(req, res) {
-  eventModel.allEvent(req, (loginErr, user) => {
-    if (loginErr) {
-      console.log('Database error:', loginErr);
-    } else {
-      console.log('controller', user);
-      res.send({ user });
-    }
-  });
+async function allEvent(req, res) {
+  try {
+    const user = await eventModel.allEvent();
+    console.log('Controller', user);
+    res.send({ user });
+  } catch (error) {
+    console.log('Database error:', error);
+    res.status(500).send('Internal Server Error');
+  }
 }
-function eventSelected(req, res) {
+
+async function eventSelected(req, res) {
   const eventClicked = req.body.eventSelected;
-  eventModel.eventSelected(eventClicked, (err, data) => {
-    if (err) {
-      console.log('Database error:', err);
-    } else {
-      res.send({ data });
-    }
-  });
+  try {
+    const data = await eventModel.eventSelected(eventClicked);
+    res.send({ data });
+  } catch (error) {
+    console.log('Database error:', error);
+    res.status(500).send('Internal Server Error');
+  }
 }
 
 module.exports = {
