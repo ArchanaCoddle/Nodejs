@@ -7,6 +7,11 @@ const con = mysql.createConnection({
   password: 'Ammu123@',
   database: 'archana',
 });
+if (con) {
+  console.log('db con complete');
+} else {
+  console.log('db not complete');
+}
 
 async function signup(user) {
   try {

@@ -21,7 +21,7 @@ function verifying(req, res, next) {
 async function allEvent(req, res) {
   try {
     const user = await eventModel.allEvent();
-    console.log('Controller', user);
+    console.log('Controller side', user);
     res.send({ user });
   } catch (error) {
     console.log('Database error:', error);

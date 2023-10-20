@@ -7,6 +7,11 @@ const cont = mysql.createConnection({
   password: 'Ammu123@',
   database: 'archana',
 });
+if (cont) {
+  console.log('db con complete');
+} else {
+  console.log('db not complete');
+}
 
 async function allEvent() {
   try {
@@ -19,6 +24,7 @@ async function allEvent() {
     throw error;
   }
 }
+
 async function eventSelected(eventsSelected) {
   try {
     const sql = 'SELECT * FROM package_categories where name=?';
@@ -32,5 +38,5 @@ async function eventSelected(eventsSelected) {
 }
 
 module.exports = {
-  allEvent, eventSelected,
+  allEvent, eventSelected, cont,
 };
