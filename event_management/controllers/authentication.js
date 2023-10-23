@@ -17,7 +17,7 @@ async function login(req, res) {
     }
   } catch (error) {
     console.log('Database error:', error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send({ succes: false, message: ('Internal Server Error') });
   }
 }
 async function signup(req, res) {
