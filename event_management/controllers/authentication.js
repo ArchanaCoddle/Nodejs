@@ -10,10 +10,10 @@ async function login(req, res) {
     const user = await UserModel.login(username, password);
     if (user) {
       jwt.sign({ user }, secretKey, { expiresIn: '86400s' }, (_jwtErr, token) => {
-        res.json({ auth: true, token });
+        res.json({ succes: true, auth: true, token });
       });
     } else {
-      res.console.log('invalid username/password');
+      res.console.log({ succes: false, message: ('invalid username/password') });
     }
   } catch (error) {
     console.log('Database error:', error);
