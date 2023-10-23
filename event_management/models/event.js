@@ -3,9 +3,11 @@ const mysql = require('../database/db');
 
 async function allEvent() {
   try {
+    const con = await mysql();
     const sql = 'SELECT id, name, description, type, price FROM package_categories';
-    const result = await (await mysql).query(sql);
+    const result = await con.query(sql);
     console.log('Data retrieved successfully.', result[0]);
+    con.end();
     return result[0];
   } catch (error) {
     console.log('Error retrieving data:', error);
@@ -15,9 +17,11 @@ async function allEvent() {
 
 async function eventSelected(eventsSelected) {
   try {
+    const con = await mysql();
     const sql = 'SELECT * FROM package_categories where name=?';
-    const value = await (await mysql).query(sql, [eventsSelected]);
+    const value = await con.query(sql, [eventsSelected]);
     console.log('Data retrieved successfully.', value[0]);
+    con.end();
     return value[0];
   } catch (error) {
     console.log('Error retrieving data:', error);

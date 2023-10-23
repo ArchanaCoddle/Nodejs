@@ -21,19 +21,28 @@ async function login(req, res) {
   }
 }
 async function signup(req, res) {
-  const {
-    id, firstname, lastname, phone, email, address, username, password,
-  } = req.body;
-  const newUser = {
-    id, firstname, lastname, phone, email, address, username, password,
-  };
-  console.log(newUser);
   try {
-    await UserModel.signup(newUser);
-    res.send('Signup successful');
+    const {
+      id, firstname, lastname, phone, email, address, username, password,
+    } = req.body;
+    const newUser = {
+      id, firstname, lastname, phone, email, address, username, password,
+    };
+    console.log(newUser);
+    if (id === '' || firstname === '' || lastname === ''
+    || email === '' || address === '' || phone === ''
+    || username === '' || password === '') {
+      res.send({ succes: false, message: ('Missing required fields') });
+    }
+    if (phone.length !== 10) {
+      res.send({ succes: false, message: ('number is not valid') });
+    } else {
+      await UserModel.signup(newUser);
+      res.send({ succes: true, message: ('Signup successful') });
+    }
   } catch (error) {
     console.log('Database error:', error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send({ succes: false, message: ('Internal Server Error') });
   }
 }
 

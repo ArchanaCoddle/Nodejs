@@ -1,15 +1,18 @@
+/* eslint-disable no-useless-catch */
 const mysql = require('mysql2/promise');
 
-const cont = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Ammu123@',
-  database: 'archana',
-});
-if (cont) {
-  console.log('db con complete');
-} else {
-  console.log('db not complete');
+async function connectiondb() {
+  try {
+    const cont = await mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'Ammu123@',
+      database: 'archana',
+    });
+    return cont;
+  } catch (error) {
+    throw error;
+  }
 }
 
-module.exports = cont;
+module.exports = connectiondb;

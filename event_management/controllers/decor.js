@@ -5,11 +5,11 @@ async function allDecor(req, res) {
   try {
     jwt(req, res, async () => {
       const data = await eventModel.allDecor();
-      res.send({ data });
+      res.send({ succes: true, message: { data } });
     });
   } catch (error) {
     console.log('Database error:', error);
-    res.status(500).send('internal server error');
+    res.status(500).send({ succes: false, message: ('internal server error') });
   }
 }
 
