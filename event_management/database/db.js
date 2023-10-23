@@ -3,13 +3,13 @@ const mysql = require('mysql2/promise');
 
 async function connectiondb() {
   try {
-    const cont = await mysql.createConnection({
+    const connection = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
       password: 'Ammu123@',
       database: 'archana',
     });
-    return cont;
+    return connection;
   } catch (error) {
     throw error;
   }
