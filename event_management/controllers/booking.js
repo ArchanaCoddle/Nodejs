@@ -1,8 +1,8 @@
-const eventModel = require('../models/decor');
+const eventBook = require('../models/booking');
 
-async function allDecor(req, res) {
+async function eventBooking(req, res) {
   try {
-    const data = await eventModel.allDecor();
+    const data = await eventBook.eventBooking();
     res.status(200).send({ succes: true, data });
   } catch (error) {
     console.log('Database error:', error);
@@ -10,6 +10,4 @@ async function allDecor(req, res) {
   }
 }
 
-module.exports = {
-  allDecor,
-};
+module.exports = { eventBooking };

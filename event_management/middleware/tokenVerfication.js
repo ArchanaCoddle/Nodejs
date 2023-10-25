@@ -18,7 +18,7 @@ function verifying(req, res, next) {
     });
   } catch (error) {
     console.log('verifing error', error);
-    res.status(500).send('internal server error');
+    res.status(500).send('internal server error for tokken');
   }
 }
 
