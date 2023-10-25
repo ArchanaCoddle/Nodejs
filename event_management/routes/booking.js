@@ -7,6 +7,7 @@ const jwt = require('../middleware/tokenVerfication');
 const server = express();
 server.use(bodyParser.json());
 
-server.get('/event', jwt, booking.eventBooking);
+server.get('/details', jwt, booking.eventDetails);
+server.post('/event', jwt, booking.eventBooking);
 
 module.exports = server;
