@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-useless-catch */
 const mysql = require('../database/db');
 
@@ -25,6 +27,22 @@ async function eventBooking(event) {
     const values = [event.id, event.name, event.package_id,
       event.cutomer_id, event.venu_id, event.total_price, event.date_event, event.status_event];
     const result = await con.query(sql, values);
+
+    const food = event.food_item;
+    const quantity = event.food_quantity;
+    const foodSql = 'SELECT id FROM menu_item WHERE name=?';
+    const fooditem = await con.query(foodSql, food);
+    const booked = `insert into booked_food (id, booking_id, menu_item_id, quantity) values(8, '${event.id}', '${fooditem[0][0].id}', '${quantity}')`;
+    const bookedfooditem = await con.query(booked);
+
+    const decorator = event.decor_item;
+    const decor_quantity = event.decor_quantity;
+    const decorSql = 'select id from decor_item where name=?';
+    const decoritems = await con.query(decorSql, decorator);
+    const decor = `insert into booked_decor (id, decor_item_id, booking_id, quantity) values(8, '${decoritems[0][0].id}', '${event.id}', '${decor_quantity}')`;
+    const bookeddecoritem = await con.query(decor);
+
+    console.log(bookedfooditem, bookeddecoritem);
     console.log('Data inserted successfully.');
     con.end();
     return result;

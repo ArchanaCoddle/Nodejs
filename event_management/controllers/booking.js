@@ -15,11 +15,11 @@ async function eventDetails(req, res) {
 async function eventBooking(req, res) {
   const {
     id, name, package_id, cutomer_id, venu_id,
-    total_price, date_event, status_event,
+    total_price, date_event, status_event, food_item, decor_item, food_quantity, decor_quantity,
   } = req.body;
   const event = {
     id, name, package_id, cutomer_id, venu_id,
-    total_price, date_event, status_event,
+    total_price, date_event, status_event, food_item, decor_item, food_quantity, decor_quantity,
   };
   try {
     await eventBook.eventBooking(event);
