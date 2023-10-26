@@ -1,3 +1,5 @@
+/* eslint-disable no-else-return */
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-useless-catch */
@@ -69,6 +71,7 @@ async function foodDecorBooking(event) {
     console.log(dateDiff);
     const diffDate = Math.abs(dateDiff[0][0].dateDiff);
     console.log(diffDate);
+
     if (diffDate > 2) {
       const decorName = event.decor_item;
       const decorSql = 'select id from decor_item where name=?';
@@ -87,7 +90,9 @@ async function foodDecorBooking(event) {
       console.log(bookeddecoritem, bookedfooditem);
       console.log('Data inserted successfully.');
       con.end();
+      return 'Data inserted successfully.';
     } else {
+      console.log('Date duration is less');
       return 'Date duration is less';
     }
   } catch (error) {

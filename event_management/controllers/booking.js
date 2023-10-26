@@ -38,8 +38,8 @@ async function foodDecorBooking(req, res) {
     event_name, food_item, decor_item, food_quantity, decor_quantity, t_date,
   };
   try {
-    await eventBook.foodDecorBooking(event);
-    res.status(200).send({ succes: true, message: ('Event is booked successful') });
+    const result = await eventBook.foodDecorBooking(event);
+    res.status(200).send({ succes: true, message: result });
   } catch (error) {
     console.log('Database error:', error);
     res.status(500).send({ succes: false, message: ('internal server error') });
