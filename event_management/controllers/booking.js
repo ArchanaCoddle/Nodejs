@@ -32,10 +32,10 @@ async function eventBooking(req, res) {
 
 async function foodDecorBooking(req, res) {
   const {
-    event_name, food_item, decor_item, food_quantity, decor_quantity,
+    event_name, food_item, decor_item, food_quantity, decor_quantity, t_date,
   } = req.body;
   const event = {
-    event_name, food_item, decor_item, food_quantity, decor_quantity,
+    event_name, food_item, decor_item, food_quantity, decor_quantity, t_date,
   };
   try {
     await eventBook.foodDecorBooking(event);

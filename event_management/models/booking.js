@@ -59,6 +59,43 @@ async function foodDecorBooking(event) {
     const bookSql = 'select id from booking where name=?';
     const bookedid = await con.query(bookSql, bookedName);
 
+    // const av = await con.query(`select date(date_event)
+    //  from booking where name='${bookedName}'`);
+    // console.log('sdvsv', av);
+
+    const dateSql = 'SELECT DATE_FORMAT(date_event, "%Y-%m-%d") AS date FROM booking where name=?';
+    // SELECT DATE_FORMAT(date_event, '%Y-%m-%d') AS date FROM booking;
+    const bookeddate = await con.query(dateSql, bookedName);
+    console.log(bookeddate);
+    const fulldate = bookeddate[0][0].date;
+    console.log(event.t_date);
+
+    const dateDiff = await con.query(`SELECT TIMESTAMPDIFF(day, '${fulldate}', '${event.t_date}')as dateDiff`);
+    console.log(dateDiff);
+    const diffDate = Math.abs(dateDiff[0][0].dateDiff);
+    console.log(diffDate);
+    if (diffDate < 2) {
+      const decorName = event.decor_item;
+      const decorSql = 'select id from decor_item where name=?';
+      const decorid = await con.query(decorSql, decorName);
+
+      const foodName = event.food_item;
+      const foodSql = 'select id from menu_item where name=?';
+      const foodid = await con.query(foodSql, foodName);
+
+      const decor = `insert into booked_decor (decor_item_id, booking_id, quantity) values('${decorid[0][0].id}', '${bookedid[0][0].id}', '${event.decor_quantity}')`;
+      const bookeddecoritem = await con.query(decor);
+
+      const booked = `insert into booked_food (booking_id, menu_item_id, quantity) values('${bookedid[0][0].id}', '${foodid[0][0].id}', '${event.food_quantity}')`;
+      const bookedfooditem = await con.query(booked);
+
+      console.log(bookeddecoritem, bookedfooditem);
+      console.log('Data inserted successfully.');
+      con.end();
+    } else {
+      return 'Date duration is less';
+    }
+
     const decorName = event.decor_item;
     const decorSql = 'select id from decor_item where name=?';
     const decorid = await con.query(decorSql, decorName);
