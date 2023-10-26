@@ -32,24 +32,54 @@ async function eventBooking(event) {
     const quantity = event.food_quantity;
     const foodSql = 'SELECT id FROM menu_item WHERE name=?';
     const fooditem = await con.query(foodSql, food);
-    const booked = `insert into booked_food (id, booking_id, menu_item_id, quantity) values(8, '${event.id}', '${fooditem[0][0].id}', '${quantity}')`;
+    const booked = `insert into booked_food (booking_id, menu_item_id, quantity) values('${event.id}', '${fooditem[0][0].id}', '${quantity}')`;
     const bookedfooditem = await con.query(booked);
 
     const decorator = event.decor_item;
     const decor_quantity = event.decor_quantity;
     const decorSql = 'select id from decor_item where name=?';
     const decoritems = await con.query(decorSql, decorator);
-    const decor = `insert into booked_decor (id, decor_item_id, booking_id, quantity) values(8, '${decoritems[0][0].id}', '${event.id}', '${decor_quantity}')`;
+    const decor = `insert into booked_decor (decor_item_id, booking_id, quantity) values('${decoritems[0][0].id}', '${event.id}', '${decor_quantity}')`;
     const bookeddecoritem = await con.query(decor);
 
-    console.log(bookedfooditem, bookeddecoritem);
+    console.log(bookedfooditem, bookeddecoritem, result);
     console.log('Data inserted successfully.');
     con.end();
-    return result;
   } catch (error) {
     console.log('Error retrieving data:', error);
     throw error;
   }
 }
 
-module.exports = { eventDetails, eventBooking };
+async function foodDecorBooking(event) {
+  try {
+    const con = await mysql();
+
+    const bookedName = event.event_name;
+    const bookSql = 'select id from booking where name=?';
+    const bookedid = await con.query(bookSql, bookedName);
+
+    const decorName = event.decor_item;
+    const decorSql = 'select id from decor_item where name=?';
+    const decorid = await con.query(decorSql, decorName);
+
+    const foodName = event.food_item;
+    const foodSql = 'select id from menu_item where name=?';
+    const foodid = await con.query(foodSql, foodName);
+
+    const decor = `insert into booked_decor (decor_item_id, booking_id, quantity) values('${decorid[0][0].id}', '${bookedid[0][0].id}', '${event.decor_quantity}')`;
+    const bookeddecoritem = await con.query(decor);
+
+    const booked = `insert into booked_food (booking_id, menu_item_id, quantity) values('${bookedid[0][0].id}', '${foodid[0][0].id}', '${event.food_quantity}')`;
+    const bookedfooditem = await con.query(booked);
+
+    console.log(bookeddecoritem, bookedfooditem);
+    console.log('Data inserted successfully.');
+    con.end();
+  } catch (error) {
+    console.log('Error retrieving data:', error);
+    throw error;
+  }
+}
+
+module.exports = { eventDetails, eventBooking, foodDecorBooking };

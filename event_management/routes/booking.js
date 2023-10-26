@@ -9,5 +9,6 @@ server.use(bodyParser.json());
 
 server.get('/details', jwt, booking.eventDetails);
 server.post('/event', jwt, booking.eventBooking);
+server.post('/foodDecor', jwt, booking.foodDecorBooking);
 
 module.exports = server;

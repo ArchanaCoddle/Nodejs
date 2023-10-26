@@ -30,4 +30,20 @@ async function eventBooking(req, res) {
   }
 }
 
-module.exports = { eventDetails, eventBooking };
+async function foodDecorBooking(req, res) {
+  const {
+    event_name, food_item, decor_item, food_quantity, decor_quantity,
+  } = req.body;
+  const event = {
+    event_name, food_item, decor_item, food_quantity, decor_quantity,
+  };
+  try {
+    await eventBook.foodDecorBooking(event);
+    res.status(200).send({ succes: true, message: ('Event is booked successful') });
+  } catch (error) {
+    console.log('Database error:', error);
+    res.status(500).send({ succes: false, message: ('internal server error') });
+  }
+}
+
+module.exports = { eventDetails, eventBooking, foodDecorBooking };
